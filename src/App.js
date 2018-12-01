@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Form from './components/Form';
 import Titles from './components/Titles';
 import Weather from './components/Weather';
-
+import './App.css'
 const API_KEY = '23638e339f702384a55ce1c20bd3c8c0';
 
 class App extends Component {
@@ -13,18 +13,19 @@ class App extends Component {
     country: undefined,
     description: undefined,
     error: undefined,
+    lat: undefined,
+    lon: undefined,
+    errorBool: undefined,
   }
+
 
   getWeather = async (e) => {
     e.preventDefault();   // preventing page refresh
-    
     const city = e.target.elements.city.value;
-
     const api_call = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
     const data = await api_call.json();
-
     if(city){
-      console.log(data);
+      //console.log(data);
       this.setState({
       temperature: data.main.temp,  // updating values
       city: data.name,
@@ -34,20 +35,54 @@ class App extends Component {
     })
     } else {
       this.setState({
-        temperature: undefined,
-        city: undefined,
-        country: undefined,
-        description: undefined,
         error: "Please Enter A City",
     })
     } 
   } 
 
+  getWeatherForFiveDays = async (e) => {
+    e.preventDefault();
+    const city = e.target.elements.city.value;
+    const api_call = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`);
+    const data = await api_call.json();
+    console.log(data);
+  }
+
+  getLocation = (e) => {
+    e.preventDefault();
+    if (!navigator.geolocation){
+      this.setState({
+        error: "Geolocation is not supported by your browser."
+      })
+      return;
+    }
+    
+    const success = (position) => {
+      const latitude  = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      this.setState({
+        lat: latitude,
+        lon: longitude
+      });
+      console.log(this.state);
+    }
+    const error = () => {
+      this.setState({
+        error: "Unable to retrieve your location."
+      })
+    }
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+
   render() {
     return (
       <div className="App">
         <Titles />
-        <Form getWeather={this.getWeather} />
+        <Form 
+        getWeather={this.getWeather} 
+        getWeatherForFiveDays={this.getWeatherForFiveDays}
+        getLocation={this.getLocation}
+        />
         <Weather 
         temperature={this.state.temperature}
         city={this.state.city}
@@ -55,6 +90,7 @@ class App extends Component {
         description={this.state.description}
         error={this.state.error}
          />
+        
       </div>
     );
   }
