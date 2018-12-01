@@ -9,7 +9,7 @@ export default class Form extends Component {
             <input type="text" name="city" placeholder="City..."/>
             <button>Get Weather</button>
         </form>
-        <button onClick={this.props.getLocation}>Get Location</button>
+        <button onClick={this.props.getWeatherLatLon}>Get Location</button>
       </div>
     )
   }

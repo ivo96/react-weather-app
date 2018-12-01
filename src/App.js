@@ -48,15 +48,29 @@ class App extends Component {
     console.log(data);
   }
 
-  getLocation = (e) => {
-    e.preventDefault();
+  getWeatherLatLon = async () => {
+    await this.getLocation();
+    const LAT = this.state.lat;
+    const LON = this.state.lon;
+    //const api_call = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`);
+    const api_call = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`);
+    const data = await api_call.json();
+    this.setState({
+      temperature: data.main.temp,  // updating values
+      city: data.name,
+      country: data.sys.country,
+      description: data.weather[0].description,
+      error: ""
+    })
+  }
+
+  getLocation = async () => {
     if (!navigator.geolocation){
       this.setState({
         error: "Geolocation is not supported by your browser."
       })
       return;
     }
-    
     const success = (position) => {
       const latitude  = position.coords.latitude;
       const longitude = position.coords.longitude;
@@ -64,7 +78,7 @@ class App extends Component {
         lat: latitude,
         lon: longitude
       });
-      console.log(this.state);
+     // console.log(this.state);
     }
     const error = () => {
       this.setState({
@@ -75,13 +89,14 @@ class App extends Component {
   }
 
   render() {
+    this.getLocation();
     return (
       <div className="App">
         <Titles />
         <Form 
         getWeather={this.getWeather} 
         getWeatherForFiveDays={this.getWeatherForFiveDays}
-        getLocation={this.getLocation}
+        getWeatherLatLon={this.getWeatherLatLon}
         />
         <Weather 
         temperature={this.state.temperature}
