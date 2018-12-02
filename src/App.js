@@ -8,14 +8,7 @@ const API_KEY = '23638e339f702384a55ce1c20bd3c8c0';
 class App extends Component {
   
   state = {
-    temperature: undefined,     // initial state of the object
-    city: undefined,
-    country: undefined,
-    description: undefined,
-    error: undefined,
-    lat: undefined,
-    lon: undefined,
-    errorBool: undefined,
+    conditionsArray: []
   }
   
   getWeather = async (e) => {
@@ -24,19 +17,30 @@ class App extends Component {
     const api_call = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
     const data = await api_call.json();
     if(city){
-      //console.log(data);
-      this.setState({
+      const newConditions = {
         temperature: data.main.temp,  // updating values
         city: data.name,
         country: data.sys.country,
         description: data.weather[0].description,
         error: ""
-      })
+      }
+      //console.log(newConditions);
+      this.setState({
+        conditionsArray: [...this.state.conditionsArray, newConditions]
+      });
+      console.log(this.state.conditionsArray);
     }
     else {
+      const newConditions = {
+        temperature: undefined,
+        city: undefined,
+        country: undefined,
+        description: undefined,
+        error: "Please input a city."
+      }
       this.setState({
-        error: "Please Enter A City",
-    })
+        conditionsArray: [...this.state.conditionsArray, newConditions]
+    });
     } 
   } 
 
@@ -45,7 +49,26 @@ class App extends Component {
     const city = e.target.elements.city.value;
     const api_call = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`);
     const data = await api_call.json();
+    const listLength = data.cnt;
     console.log(data);
+    for(let i = 0; i < listLength; i++){
+      const newConditions = {
+        temperature: data.list[i].main.temp,
+        tempMin: data.list[i].main.temp_min,
+        tempMax: data.list[i].main.temp_max,
+        city: data.city.name,
+        country: data.city.country,
+        description: data.list[i].weather[0].description,
+        icon: data.list[i].weather[0].icon,
+        windSpeed: data.list[i].wind.speed,
+        dateText: data.list[i].dt_txt,
+        error: ""
+      }
+      this.setState({
+        conditionsArray: [...this.state.conditionsArray, newConditions]
+      });
+    }
+    console.log(this.state.conditionsArray);
   }
 
   getWeatherLatLon = async () => {
@@ -98,15 +121,18 @@ class App extends Component {
         getWeatherForFiveDays={this.getWeatherForFiveDays}
         getWeatherLatLon={this.getWeatherLatLon}
         />
+        {
+          /*
         <Weather 
-        temperature={this.state.temperature}
-        city={this.state.city}
-        country={this.state.country}
-        description={this.state.description}
-        error={this.state.error}
+            temperature={this.state.conditionsArray[0].temperature}
+            city={this.state.conditionsArray[0].city}
+            country={this.state.conditionsArray[0].country}
+            description={this.state.conditionsArray[0].description}
+            error={this.state.conditionsArray[0].error}
          />
-        
-      </div>
+        */
+        }
+      </div>      
     );
   }
 }

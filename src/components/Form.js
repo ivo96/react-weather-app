@@ -5,7 +5,7 @@ export default class Form extends Component {
     return (
       <div className="app-form-layout">
         <form className="app-something"
-        onSubmit={this.props.getWeather} >
+        onSubmit={this.props.getWeatherForFiveDays} >
             <input type="text" name="city" placeholder="City..."/>
             <button>Get Weather</button>
         </form>
