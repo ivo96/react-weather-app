@@ -8,6 +8,11 @@ const API_KEY = '23638e339f702384a55ce1c20bd3c8c0';
 class App extends Component {
 
   state = {
+    listConditions: []
+  }
+
+  /*
+  state = {
     temperature: undefined,     // initial state of the object
     city: undefined,
     country: undefined,
@@ -16,6 +21,21 @@ class App extends Component {
     lat: undefined,
     lon: undefined,
     errorBool: undefined,
+  }
+  */
+
+  updateListConditions = (data) => {
+    const newCondition = {
+      temperature: data.main.temp,  // updating values
+      city: data.name,
+      country: data.sys.country,
+      description: data.weather[0].description,
+      error: ""
+    }
+
+    this.setState(({
+      listConditions: [...this.state.listConditions, newCondition]
+    }))
   }
 
 
@@ -26,14 +46,9 @@ class App extends Component {
     const data = await api_call.json();
     if(city){
       //console.log(data);
-      this.setState({
-      temperature: data.main.temp,  // updating values
-      city: data.name,
-      country: data.sys.country,
-      description: data.weather[0].description,
-      error: ""
-    })
-    } else {
+      this.updateListConditions(data);
+    }
+    else {
       this.setState({
         error: "Please Enter A City",
     })
@@ -99,11 +114,11 @@ class App extends Component {
         getWeatherLatLon={this.getWeatherLatLon}
         />
         <Weather 
-        temperature={this.state.temperature}
-        city={this.state.city}
-        country={this.state.country}
-        description={this.state.description}
-        error={this.state.error}
+        temperature={this.state.listConditions[1].temperature}
+        city={this.state.listConditions[0].city}
+        country={this.state.listConditions[0].country}
+        description={this.state.listConditions[0].description}
+        error={this.state.listConditions[0].error}
          />
         
       </div>
