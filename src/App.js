@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Form from './components/Form';
 import Titles from './components/Titles';
 import Weather from './components/Weather';
+import WeatherForFiveDays from './components/WeatherForFiveDays';
 import './App.css'
+import { reset } from 'ansi-colors';
 const API_KEY = '23638e339f702384a55ce1c20bd3c8c0';
 
 class App extends Component {
@@ -11,6 +13,13 @@ class App extends Component {
     conditionsArray: []
   }
   
+  resetState = () => {
+    this.setState({
+      conditionsArray: []
+    })
+  }
+
+
   getWeather = async (e) => {
     e.preventDefault();   // preventing page refresh
     const city = e.target.elements.city.value;
@@ -49,8 +58,8 @@ class App extends Component {
     const city = e.target.elements.city.value;
     const api_call = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`);
     const data = await api_call.json();
+    this.resetState();
     const listLength = data.cnt;
-    console.log(data);
     for(let i = 0; i < listLength; i++){
       const newConditions = {
         temperature: data.list[i].main.temp,
@@ -72,19 +81,33 @@ class App extends Component {
   }
 
   getWeatherLatLon = async () => {
+    
     await this.getLocation();
     const LAT = this.state.lat;
     const LON = this.state.lon;
-    //const api_call = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`);
-    const api_call = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`);
+    const api_call = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`);
+    //const api_call = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`);
     const data = await api_call.json();
-    this.setState({
-      temperature: data.main.temp,  // updating values
-      city: data.name,
-      country: data.sys.country,
-      description: data.weather[0].description,
-      error: ""
-    })
+    this.resetState();
+    const listLength = data.cnt;
+    for(let i = 0; i < listLength; i++){
+      const newConditions = {
+        temperature: data.list[i].main.temp,
+        tempMin: data.list[i].main.temp_min,
+        tempMax: data.list[i].main.temp_max,
+        city: data.city.name,
+        country: data.city.country,
+        description: data.list[i].weather[0].description,
+        icon: data.list[i].weather[0].icon,
+        windSpeed: data.list[i].wind.speed,
+        dateText: data.list[i].dt_txt,
+        error: ""
+      }
+      this.setState({
+        conditionsArray: [...this.state.conditionsArray, newConditions]
+      });
+    }
+    console.log(this.state.conditionsArray);
   }
 
   getLocation = async () => {
@@ -121,6 +144,7 @@ class App extends Component {
         getWeatherForFiveDays={this.getWeatherForFiveDays}
         getWeatherLatLon={this.getWeatherLatLon}
         />
+        <WeatherForFiveDays conditionsArray={this.state.conditionsArray} />
         {
           /*
         <Weather 
