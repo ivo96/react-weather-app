@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import Form from './components/Form';
 import Titles from './components/Titles';
-import Weather from './components/Weather';
 import WeatherForFiveDays from './components/WeatherForFiveDays';
 import './App.css'
-import { reset } from 'ansi-colors';
 const API_KEY = '23638e339f702384a55ce1c20bd3c8c0';
 
 class App extends Component {
