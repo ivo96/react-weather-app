@@ -7,7 +7,7 @@ body {
 }
 
 .wrapper {
-  background: linear-gradient(to right, #2A33A3, #19207F);
+  background: linear-gradient(to right, #2A33A3, #192180);
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -40,6 +40,8 @@ body {
 }
 
 .title-container__subtitle {
+  display: grid;
+  grid-template-columns: (1, 1fr);
   font-style: italic;
   font-weight: 100;
   letter-spacing: 1px;
@@ -57,17 +59,16 @@ body {
 input[type="text"] {
   background-color: transparent;
   border: 0;
-  border-bottom: solid 1px #C76E19;
-  width: 80%;
+  border-bottom: solid 1px #646BC3;
+  width: 32%;
   padding-bottom: 4px;
   color: #fff !important;
   font-weight: lighter;
   letter-spacing: 2px;
   margin-bottom: 30px;
   margin-right: 20px;
-  margin-left: 60px;
   font-size: 20px;
-  
+
 }
 
 input[type="text"] { 
@@ -83,24 +84,21 @@ button {
   border: 0;
   padding: 8px 20px;
   margin: 0 2px;
-  margin-left: 37%;
   border-radius: 2px;
   font-weight: lighter;
   letter-spacing: 1px;
   font-size: 15px;
   cursor: pointer;
-  background-color: #C76E19;
+  background-color: #2A33A3;
   color: #fff;
   font-weight: 100;
 }
 
 .button-location {
+  justify-content: center;
   border: 0;
   padding: 8px 20px;
-  margin: 0 2px;
-  margin-top: 10px;
-  margin-left: 33%;
-  margin-bottom: 5%;
+  margin-top: 0%;
   border-radius: 2px;
   font-weight: lighter;
   letter-spacing: 1px;
@@ -108,8 +106,10 @@ button {
   cursor: pointer;
   background-color: transparent;
   color: #fff;
-  border-bottom: solid 1px #C76E19;
+  border-bottom: solid 1px #646BC3;
   font-weight: 100;
+  align-items: center;
+
 }
 
 button:active {
@@ -124,7 +124,7 @@ button:active {
 }
 
 .weather__key {
-  color: #FFAF62;
+  color: #9095DB;
   border-bottom: solid 2px rgba(255,255,255,0.06);
   padding: 20px 0 20px 0;
   font-weight: 400;
@@ -144,4 +144,13 @@ button:active {
   font-size: 20px;
   letter-spacing: 1px;
   font-weight: 200;
+}
+
+@media (max-width: 560px) {
+  .button-location {
+    margin-top: 5%;
+  }
+  input[type="text"] {
+    width: 60%;
+  }
 }
