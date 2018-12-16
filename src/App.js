@@ -48,7 +48,7 @@ class App extends Component {
     await this.getLocation();
     const LAT = this.state.lat;
     const LON = this.state.lon;
-    //const api_call = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`);
+    //const api_call = awWeather App From The Futureait fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`);
     const api_call = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`);
     const data = await api_call.json();
     //console.log(data)

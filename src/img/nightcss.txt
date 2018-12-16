@@ -57,15 +57,17 @@ body {
 input[type="text"] {
   background-color: transparent;
   border: 0;
-  border-bottom: solid 1px #646BC3;
-  width: 30%;
+  border-bottom: solid 1px #C76E19;
+  width: 80%;
   padding-bottom: 4px;
   color: #fff !important;
   font-weight: lighter;
   letter-spacing: 2px;
   margin-bottom: 30px;
   margin-right: 20px;
+  margin-left: 60px;
   font-size: 20px;
+  
 }
 
 input[type="text"] { 
@@ -81,12 +83,13 @@ button {
   border: 0;
   padding: 8px 20px;
   margin: 0 2px;
+  margin-left: 37%;
   border-radius: 2px;
   font-weight: lighter;
   letter-spacing: 1px;
   font-size: 15px;
   cursor: pointer;
-  background-color: #646BC3;
+  background-color: #C76E19;
   color: #fff;
   font-weight: 100;
 }
@@ -95,6 +98,9 @@ button {
   border: 0;
   padding: 8px 20px;
   margin: 0 2px;
+  margin-top: 10px;
+  margin-left: 33%;
+  margin-bottom: 5%;
   border-radius: 2px;
   font-weight: lighter;
   letter-spacing: 1px;
@@ -102,7 +108,7 @@ button {
   cursor: pointer;
   background-color: transparent;
   color: #fff;
-  border-bottom: solid 1px #646BC3;
+  border-bottom: solid 1px #C76E19;
   font-weight: 100;
 }
 
@@ -118,7 +124,7 @@ button:active {
 }
 
 .weather__key {
-  color: #9095DB;
+  color: #FFAF62;
   border-bottom: solid 2px rgba(255,255,255,0.06);
   padding: 20px 0 20px 0;
   font-weight: 400;
