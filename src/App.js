@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import Form from './components/Form';
 import Titles from './components/Titles';
-import Weather from './components/Weather';
-import './App.css'
+import Weather2 from './components/Weather2';
+import './App.css';
+
+
+
 const API_KEY = '23638e339f702384a55ce1c20bd3c8c0';
 
 class App extends Component {
@@ -24,29 +27,22 @@ class App extends Component {
     const city = e.target.elements.city.value;
     const api_call = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
     const data = await api_call.json();
-    if(city){
+    if (city) {
       //console.log(data);
       this.setState({
-      temperature: data.main.temp,  // updating values
-      city: data.name,
-      country: data.sys.country,
-      description: data.weather[0].description,
-      error: ""
-    })
+        temperature: data.main.temp,  // updating values
+        city: data.name,
+        country: data.sys.country,
+        description: data.weather[0].description,
+        error: ""
+      })
     } else {
       this.setState({
         error: "Please Enter A City",
-    })
-    } 
-  } 
-
-  getWeatherForFiveDays = async (e) => {
-    e.preventDefault();
-    const city = e.target.elements.city.value;
-    const api_call = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`);
-    const data = await api_call.json();
-    console.log(data);
+      })
+    }
   }
+
 
   getWeatherLatLon = async () => {
     await this.getLocation();
@@ -55,6 +51,7 @@ class App extends Component {
     //const api_call = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`);
     const api_call = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`);
     const data = await api_call.json();
+    //console.log(data)
     this.setState({
       temperature: data.main.temp,  // updating values
       city: data.name,
@@ -65,20 +62,20 @@ class App extends Component {
   }
 
   getLocation = async () => {
-    if (!navigator.geolocation){
+    if (!navigator.geolocation) {
       this.setState({
         error: "Geolocation is not supported by your browser."
       })
       return;
     }
     const success = (position) => {
-      const latitude  = position.coords.latitude;
+      const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
       this.setState({
         lat: latitude,
         lon: longitude
       });
-     // console.log(this.state);
+      console.log(this.state);
     }
     const error = () => {
       this.setState({
@@ -91,21 +88,32 @@ class App extends Component {
   render() {
     this.getLocation();
     return (
-      <div className="App">
-        <Titles />
-        <Form 
-        getWeather={this.getWeather} 
-        getWeatherForFiveDays={this.getWeatherForFiveDays}
-        getWeatherLatLon={this.getWeatherLatLon}
-        />
-        <Weather 
-        temperature={this.state.temperature}
-        city={this.state.city}
-        country={this.state.country}
-        description={this.state.description}
-        error={this.state.error}
-         />
-        
+      <div>
+        <div className="wrapper">
+          <div className="main">
+            <div className="container">
+              <div className="row">
+                <div className="col-xs-5 title-container">
+                  <Titles />
+                </div>
+                <div className="col-xs-7 form-container">
+                  <Form
+                    getWeather={this.getWeather}
+                    getWeatherLatLon={this.getWeatherLatLon}
+                  />
+                  <Weather2
+                    temperature={this.state.temperature}
+                    humidity={this.state.humidity}
+                    city={this.state.city}
+                    country={this.state.country}
+                    description={this.state.description}
+                    error={this.state.error}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
