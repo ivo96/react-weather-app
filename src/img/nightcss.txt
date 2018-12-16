@@ -7,7 +7,7 @@ body {
 }
 
 .wrapper {
-  background: linear-gradient(to right, #E7780F, #B15905);
+  background: linear-gradient(to right, #2A33A3, #19207F);
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -23,7 +23,7 @@ body {
 
 .title-container {
   height: 90vh;
-  background: url("img/after_noon.png") center center no-repeat;
+  background: url("img/night.png") center center no-repeat;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -57,7 +57,7 @@ body {
 input[type="text"] {
   background-color: transparent;
   border: 0;
-  border-bottom: solid 1px #C76E19;
+  border-bottom: solid 1px #646BC3;
   width: 30%;
   padding-bottom: 4px;
   color: #fff !important;
@@ -86,7 +86,7 @@ button {
   letter-spacing: 1px;
   font-size: 15px;
   cursor: pointer;
-  background-color: #C76E19;
+  background-color: #646BC3;
   color: #fff;
   font-weight: 100;
 }
@@ -102,7 +102,7 @@ button {
   cursor: pointer;
   background-color: transparent;
   color: #fff;
-  border-bottom: solid 1px #C76E19;
+  border-bottom: solid 1px #646BC3;
   font-weight: 100;
 }
 
@@ -118,7 +118,7 @@ button:active {
 }
 
 .weather__key {
-  color: #FFAF62;
+  color: #9095DB;
   border-bottom: solid 2px rgba(255,255,255,0.06);
   padding: 20px 0 20px 0;
   font-weight: 400;
