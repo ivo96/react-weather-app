@@ -91,6 +91,21 @@ button {
   font-weight: 100;
 }
 
+.button-location {
+  border: 0;
+  padding: 8px 20px;
+  margin: 0 2px;
+  border-radius: 2px;
+  font-weight: lighter;
+  letter-spacing: 1px;
+  font-size: 15px;
+  cursor: pointer;
+  background-color: transparent;
+  color: #fff;
+  border-bottom: solid 1px #f16051;
+  font-weight: 100;
+}
+
 button:active {
   outline: none;
 }

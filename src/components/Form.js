@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+
 
 export default class Form extends Component {
   render() {
@@ -8,8 +9,9 @@ export default class Form extends Component {
           <input type="text" name="city" placeholder="City..." />
           <button>Get Weather</button>
         </form>
-        <button onClick={this.props.getWeatherLatLon}>Get Location</button>
-      </div>
+        <button className="button-location" onClick={this.props.getWeatherLatLon}>Get Location <i class='fas fa-map-marker-alt'></i> </button>
+
+      </div >
     )
   }
 }
